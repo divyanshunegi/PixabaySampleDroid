@@ -29,4 +29,5 @@ dependencies {
     compile project(':pixabayserverapi')
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.jakewharton.timber:timber:4.5.1'
+    compile 'com.android.support:recyclerview-v7:25.2.0'
 }
