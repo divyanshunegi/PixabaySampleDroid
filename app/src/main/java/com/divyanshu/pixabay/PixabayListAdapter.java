@@ -1,6 +1,7 @@
 package com.divyanshu.pixabay;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,7 +43,8 @@ public class PixabayListAdapter extends
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        PixabayDataObject.Hits image = mPixabayImages.get(position);
+        final PixabayDataObject.Hits image = mPixabayImages.get(position);
+
         Glide
                 .with(getContext())
                 .load(image.previewURL)
@@ -50,6 +52,15 @@ public class PixabayListAdapter extends
                 .placeholder(R.drawable.placeholder_emoji)
                 .crossFade()
                 .into(holder.getPixabayImage());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent in = new Intent(getContext(),ImageFullScreenActivity.class);
+                in.putExtra(ImageFullScreenActivity.IMAGE_LINK_KEY,image.webformatURL);
+                getContext().startActivity(in);
+            }
+        });
     }
 
     @Override

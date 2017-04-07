@@ -10,4 +10,6 @@
     <string name="layout_toggle">Change List Layout</string>
     <string name="search_pixabay">Search Images</string>
     <string name="search_submit">Search Pixabay</string>
+    <string name="image_link_missing">No Image found, try again!</string>
+    <string name="pass_image_error">Pass image in the intent to run this activity</string>
 </resources>
