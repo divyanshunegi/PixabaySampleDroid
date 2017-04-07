@@ -9,4 +9,5 @@
     <string name="search_in_progress">Searching the Pixabay website for your keyword...</string>
     <string name="layout_toggle">Change List Layout</string>
     <string name="search_pixabay">Search Images</string>
+    <string name="search_submit">Search Pixabay</string>
 </resources>
