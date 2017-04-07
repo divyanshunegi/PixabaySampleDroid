@@ -12,4 +12,5 @@ public interface MainActivityView {
     void showErrorMessage(int messageId);
     void showServerError(String message);
     void onImageListResponse(List<PixabayDataObject.Hits> imageList);
+    void searchingImage();
 }

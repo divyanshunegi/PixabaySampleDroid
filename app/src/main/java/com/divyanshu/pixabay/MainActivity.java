@@ -1,11 +1,13 @@
 package com.divyanshu.pixabay;
 
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -42,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityView,
     private LinearLayoutManager linearManager;
     private GridLayoutManager gridLayoutManager;
     private Menu mMenu;
+    private SearchView mSearchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +76,43 @@ public class MainActivity extends AppCompatActivity implements MainActivityView,
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         mMenu = menu;
+        mSearchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.searchLayout));
+        if (mSearchView != null )
+        {
+            SearchView.OnQueryTextListener queryTextListener = new SearchView.OnQueryTextListener()
+            {
+                public boolean onQueryTextChange(String newText)
+                {
+                    SEARCH_KEYWORD = newText;
+                    if(newText.length()>0){
+                        mMenu.findItem(R.id.searchImage).setVisible(true);
+                        mMenu.findItem(R.id.listLayout).setVisible(false);
+                        mMenu.findItem(R.id.gridLayout).setVisible(false);
+                    }else{
+                        mMenu.findItem(R.id.searchImage).setVisible(false);
+                        mMenu.findItem(R.id.listLayout).setVisible(true);
+                    }
+                    return true;
+                }
+
+                public boolean onQueryTextSubmit(String query)
+                {
+                    SEARCH_KEYWORD = query;
+                    searchImageFromSearchBar();
+                    return true;
+                }
+            };
+
+            mSearchView.setOnQueryTextListener(queryTextListener);
+        }
         return true;
+    }
+
+    private void searchImageFromSearchBar() {
+        mainActivityPresenter.fetchImages(SEARCH_KEYWORD);
+        mSearchView.setQuery("",false);
+        mSearchView.clearFocus();
+        mMenu.findItem(R.id.listLayout).setVisible(true);
     }
 
     @Override
@@ -85,11 +124,16 @@ public class MainActivity extends AppCompatActivity implements MainActivityView,
                 mMenu.findItem(R.id.listLayout).setVisible(false);
                 mMenu.findItem(R.id.gridLayout).setVisible(true);
                 break;
+
             case R.id.gridLayout:
                 imageListView.setLayoutManager(gridLayoutManager);
                 imageListView.setAdapter(adapter);
                 mMenu.findItem(R.id.listLayout).setVisible(true);
                 mMenu.findItem(R.id.gridLayout).setVisible(false);
+                break;
+
+            case R.id.searchImage:
+                searchImageFromSearchBar();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -124,6 +168,16 @@ public class MainActivity extends AppCompatActivity implements MainActivityView,
         mImageList.clear();
         mImageList.addAll(imageList);
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void searchingImage() {
+        infoLayout.setVisibility(View.VISIBLE);
+        imageListView.setVisibility(View.GONE);
+        infoViewButton.setVisibility(View.GONE);
+        infoViewProgressBar.setVisibility(View.VISIBLE);
+        infoViewIcon.setImageResource(R.drawable.search_emoji);
+        infoViewText.setText(getResources().getString(R.string.search_in_progress));
     }
 
     @Override
