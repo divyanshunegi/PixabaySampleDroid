@@ -16,7 +16,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.divyanshu.pixabay.presenter.MainActivityPresenter;
 import com.divyanshu.pixabay.view.MainActivityView;
@@ -88,6 +87,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityView,
                     if(newText.length()>0){
                         mMenu.findItem(R.id.searchImage).setVisible(true);
                         mMenu.findItem(R.id.listLayout).setVisible(false);
+                        mMenu.findItem(R.id.gridLayout).setVisible(false);
                     }else{
                         mMenu.findItem(R.id.searchImage).setVisible(false);
                         mMenu.findItem(R.id.listLayout).setVisible(true);
@@ -98,9 +98,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityView,
                 public boolean onQueryTextSubmit(String query)
                 {
                     SEARCH_KEYWORD = query;
-                    mainActivityPresenter.fetchImages(SEARCH_KEYWORD);
-                    mSearchView.clearFocus();
-                    mMenu.findItem(R.id.listLayout).setVisible(true);
+                    searchImageFromSearchBar();
                     return true;
                 }
             };
@@ -108,6 +106,13 @@ public class MainActivity extends AppCompatActivity implements MainActivityView,
             mSearchView.setOnQueryTextListener(queryTextListener);
         }
         return true;
+    }
+
+    private void searchImageFromSearchBar() {
+        mainActivityPresenter.fetchImages(SEARCH_KEYWORD);
+        mSearchView.setQuery("",false);
+        mSearchView.clearFocus();
+        mMenu.findItem(R.id.listLayout).setVisible(true);
     }
 
     @Override
@@ -119,17 +124,16 @@ public class MainActivity extends AppCompatActivity implements MainActivityView,
                 mMenu.findItem(R.id.listLayout).setVisible(false);
                 mMenu.findItem(R.id.gridLayout).setVisible(true);
                 break;
+
             case R.id.gridLayout:
                 imageListView.setLayoutManager(gridLayoutManager);
                 imageListView.setAdapter(adapter);
                 mMenu.findItem(R.id.listLayout).setVisible(true);
                 mMenu.findItem(R.id.gridLayout).setVisible(false);
                 break;
+
             case R.id.searchImage:
-                Toast.makeText(this, SEARCH_KEYWORD, Toast.LENGTH_SHORT).show();
-                mainActivityPresenter.fetchImages(SEARCH_KEYWORD);
-                mMenu.findItem(R.id.listLayout).setVisible(true);
-                mSearchView.clearFocus();
+                searchImageFromSearchBar();
                 break;
         }
         return super.onOptionsItemSelected(item);

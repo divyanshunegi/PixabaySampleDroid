@@ -37,7 +37,7 @@ public class MainActivityPresenter {
             @Override
             public void onResponse(Call<PixabayDataObject> call, Response<PixabayDataObject> response) {
 
-                if(response.body()==null && response.body().hits.size()==0){
+                if(response.body()==null || response.body().hits.size()<1){
                     mainActivityView.showErrorMessage(R.string.no_image_error);
                     return;
                 }
