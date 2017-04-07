@@ -1,7 +1,7 @@
 # PixabaySampleDroid
 ![Alt text](screenshot.jpg?raw=true "Screen shot for the app")
 
-This is a sample project, used using MVP (Model View presenter architecture)
+This is a sample project, build using MVP (Model View presenter architecture)
 
 I have used following open source libraries 
 
