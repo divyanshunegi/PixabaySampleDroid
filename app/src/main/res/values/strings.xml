@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">PixabaySampleApp</string>
+    <string name="short_keyword_error">Type minimum 3 characters in keyword</string>
+    <string name="no_image_error">No Image with this keyword found</string>
+    <string name="error_message">Something went wrong, Try again!</string>
+    <string name="retry_button">Retry</string>
+    <string name="info_message">Search Images from Pixabay Api</string>
+    <string name="info_button">Search Now</string>
+    <string name="search_in_progress">Searching the Pixabay website for your keyword...</string>
+    <string name="layout_toggle">Change List Layout</string>
+    <string name="search_pixabay">Search Images</string>
 </resources>
