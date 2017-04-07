@@ -9,7 +9,6 @@ import com.divyanshu.pixabayserverapi.callback.PixabayDataObject;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import timber.log.Timber;
 
 /**
  * Created by divyanshunegi on 4/6/17.
@@ -46,7 +45,6 @@ public class MainActivityPresenter {
 
             @Override
             public void onFailure(Call<PixabayDataObject> call, Throwable t) {
-                Timber.e(t.getMessage());
                 mainActivityView.showServerError(t.getMessage());
             }
         });
