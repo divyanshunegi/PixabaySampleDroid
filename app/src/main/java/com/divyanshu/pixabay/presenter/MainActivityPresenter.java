@@ -27,15 +27,17 @@ public class MainActivityPresenter {
 
     public void fetchImages(String keyword) {
 
+        mainActivityView.searchingImage();
+
         if(keyword.length()<2){
             mainActivityView.showErrorMessage(R.string.short_keyword_error);
         }
 
-        mServerClient.getApi().fetchPixabayImages(BuildConfig.PIXABAY_API_KEY,"sunset").enqueue(new Callback<PixabayDataObject>() {
+        mServerClient.getApi().fetchPixabayImages(BuildConfig.PIXABAY_API_KEY,keyword).enqueue(new Callback<PixabayDataObject>() {
             @Override
             public void onResponse(Call<PixabayDataObject> call, Response<PixabayDataObject> response) {
 
-                if(response.body().hits.size()==0){
+                if(response.body()==null && response.body().hits.size()==0){
                     mainActivityView.showErrorMessage(R.string.no_image_error);
                     return;
                 }
