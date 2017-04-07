@@ -11,3 +11,4 @@ I have used following open source libraries
 4) Gson (for JSON object mapping with POJO)
 5) Timber (small tool for logging, this is kind of Android Log on steroids)
 
+For git management I have used `Git flow` which was very elegant and standard way to work with git.
